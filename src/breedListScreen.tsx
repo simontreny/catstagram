@@ -34,8 +34,10 @@ const BreedCell = withNavigation(({ navigation, breed }: { navigation: Navigatio
 	return (
 		<TouchableHighlight activeOpacity={0.95} onPress={() => navigation.push("CatList", { breed })}>
 			<View style={styles.cell}>
-				<Image style={styles.thumbnail} source={{ uri: pictureUrl }}></Image>
-				<Text style={styles.name}>{breed.name}</Text>
+				<Image testID="breedPicture" style={styles.thumbnail} source={{ uri: pictureUrl }}></Image>
+				<Text testID="breedName" style={styles.name}>
+					{breed.name}
+				</Text>
 			</View>
 		</TouchableHighlight>
 	);
