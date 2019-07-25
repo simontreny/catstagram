@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View, Alert } from "react-native";
+import {
+	Image,
+	KeyboardAvoidingView,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+	Alert,
+	Platform,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { authService } from "./authService";
 
@@ -16,7 +26,7 @@ export const LoginScreen = () => {
 
 	return (
 		<>
-			<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+			<KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.select({ ios: "padding" })}>
 				<ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
 					<View style={styles.contentContainer}>
 						<Image style={styles.logo} source={require("../assets/logo.png")} />

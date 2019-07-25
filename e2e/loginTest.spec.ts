@@ -13,6 +13,7 @@ describe("Login screen", () => {
 	});
 
 	it("should show Breeds screen after log-in if user exists", async () => {
+		await element(by.id("username")).tap();
 		await element(by.id("username")).typeText("betomorrow");
 		await element(by.id("loginButton")).tap();
 		await expect(element(by.id("breedListScreen"))).toBeVisible();
