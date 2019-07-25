@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { NavigationScreenProp, NavigationScreenProps, withNavigation } from "react-navigation";
 import { fetchCatsWithBreed } from "./api";
@@ -11,15 +11,17 @@ export const CatListScreen = (props: CatListScreenProps) => {
 	const [cats, setCats] = useState<Cat[]>([]);
 	useEffect(() => {
 		fetchCatsWithBreed(props.navigation.getParam("breed").id).then(setCats);
-	});
+	}, []);
 
 	return (
-		<FlatList<Cat>
-			numColumns={3}
-			data={cats}
-			keyExtractor={item => item.id}
-			renderItem={({ item }) => <CatCell cat={item} />}
-		/>
+		<View testID="catListScreen">
+			<FlatList<Cat>
+				numColumns={3}
+				data={cats}
+				keyExtractor={item => item.id}
+				renderItem={({ item }) => <CatCell cat={item} />}
+			/>
+		</View>
 	);
 };
 
@@ -29,7 +31,12 @@ CatListScreen.navigationOptions = (props: CatListScreenProps) => ({
 
 const CatCell = withNavigation(({ navigation, cat }: { navigation: NavigationScreenProp<any>; cat: Cat }) => {
 	return (
-		<TouchableOpacity style={styles.cell} activeOpacity={0.8} onPress={() => navigation.navigate("Gallery", { cat })}>
+		<TouchableOpacity
+			testID="catCell"
+			style={styles.cell}
+			activeOpacity={0.8}
+			onPress={() => navigation.navigate("Gallery", { cat })}
+		>
 			<Image style={styles.picture} source={{ uri: cat.url }} />
 		</TouchableOpacity>
 	);

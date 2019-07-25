@@ -12,12 +12,14 @@ export const BreedListScreen = () => {
 	}, []);
 
 	return (
-		<FlatList<Breed>
-			data={breeds}
-			ItemSeparatorComponent={() => <View style={styles.separator} />}
-			keyExtractor={item => item.id}
-			renderItem={({ item }) => <BreedCell breed={item} />}
-		/>
+		<View testID="breedListScreen">
+			<FlatList<Breed>
+				data={breeds}
+				ItemSeparatorComponent={() => <View style={styles.separator} />}
+				keyExtractor={item => item.id}
+				renderItem={({ item }) => <BreedCell breed={item} />}
+			/>
+		</View>
 	);
 };
 
@@ -33,11 +35,9 @@ const BreedCell = withNavigation(({ navigation, breed }: { navigation: Navigatio
 
 	return (
 		<TouchableHighlight activeOpacity={0.95} onPress={() => navigation.push("CatList", { breed })}>
-			<View style={styles.cell}>
-				<Image testID="breedPicture" style={styles.thumbnail} source={{ uri: pictureUrl }}></Image>
-				<Text testID="breedName" style={styles.name}>
-					{breed.name}
-				</Text>
+			<View testID="breedCell" style={styles.cell}>
+				<Image style={styles.thumbnail} source={{ uri: pictureUrl }}></Image>
+				<Text style={styles.name}>{breed.name}</Text>
 			</View>
 		</TouchableHighlight>
 	);

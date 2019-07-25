@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { NavigationScreenProps } from "react-navigation";
+import { authService } from "./authService";
 
-export const LoginScreen = (props: NavigationScreenProps<{}>) => {
+export const LoginScreen = () => {
 	const [username, setUserName] = useState("");
 
-	const login = () => {
-		if (username !== "Fly Flyerson") {
-			Alert.alert("Error", "User not found");
-			return;
+	const login = async () => {
+		try {
+			await authService.login(username);
+		} catch (e) {
+			Alert.alert("Error", e.message);
 		}
-		props.navigation.replace("BreedList");
 	};
 
 	return (
@@ -27,6 +27,8 @@ export const LoginScreen = (props: NavigationScreenProps<{}>) => {
 							placeholderTextColor="#ffffffc0"
 							value={username}
 							onChangeText={setUserName}
+							autoCapitalize="none"
+							autoCorrect={false}
 						/>
 						<TouchableOpacity testID="loginButton" style={styles.button} activeOpacity={0.8} onPress={() => login()}>
 							<Text style={styles.buttonTitle}>Sign In</Text>
