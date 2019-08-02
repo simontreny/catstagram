@@ -1,20 +1,13 @@
 import { device, element, expect, by } from "detox";
 
 describe("Login screen", () => {
-	beforeEach(async () => {
+	afterEach(async () => {
 		await device.reloadReactNative();
-		await device.setURLBlacklist([".*cdn2.thecatapi.com.*"]);
-	});
-
-	it("should not log-in if user doesn't exist", async () => {
-		await element(by.id("username")).typeText("johndoe");
-		await element(by.id("loginButton")).tap();
-		await expect(element(by.text("Error"))).toBeVisible();
 	});
 
 	it("should show Breeds screen after log-in if user exists", async () => {
-		await element(by.id("username")).tap();
 		await element(by.id("username")).typeText("betomorrow");
+		await element(by.id("username")).tapReturnKey();
 		await element(by.id("loginButton")).tap();
 		await expect(element(by.id("breedListScreen"))).toBeVisible();
 	});
@@ -30,7 +23,7 @@ describe("Login screen", () => {
 	it("should show Cats screen when tapping the Birman cell", async () => {
 		await waitFor(element(by.text("Birman")))
 			.toBeVisible()
-			.whileElement(by.type("RCTScrollView"))
+			.whileElement(by.id("scrollView"))
 			.scroll(120, "down");
 		await element(by.text("Birman")).tap();
 		await expect(element(by.id("catListScreen"))).toBeVisible();
@@ -41,7 +34,7 @@ describe("Login screen", () => {
 		await expect(element(by.id("catCell")).atIndex(2)).toExist();
 	});
 
-	it("should show Gallery screen when tapping a cat in Cats screen", async () => {
+	it("should show Gallery screen when tapping a cat in Abyssinian screen", async () => {
 		await element(by.text("Abyssinian")).tap();
 		await element(by.id("catCell"))
 			.atIndex(0)

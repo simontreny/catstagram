@@ -14,6 +14,7 @@ export const BreedListScreen = () => {
 	return (
 		<View testID="breedListScreen">
 			<FlatList<Breed>
+				testID="scrollView"
 				data={breeds}
 				ItemSeparatorComponent={() => <View style={styles.separator} />}
 				keyExtractor={item => item.id}
